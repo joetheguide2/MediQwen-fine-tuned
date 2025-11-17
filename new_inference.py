@@ -69,6 +69,9 @@ Please structure your response as follows:
         # Tokenize
         inputs = tokenizer(prompt, return_tensors="pt", max_length=1024, truncation=True)
         
+        # MOVE INPUTS TO GPU - THIS IS THE FIX
+        inputs = {k: v.to(model.device) for k, v in inputs.items()}
+        
         # Generate
         with torch.no_grad():
             outputs = model.generate(
