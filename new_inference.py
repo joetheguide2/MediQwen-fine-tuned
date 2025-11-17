@@ -53,16 +53,16 @@ def inference():
         
         # Create comprehensive prompt
         instruction = """Analyze this clinical note and provide:
-1. Most suspected disease
-2. Other diseases with significant risk  
-3. Diagnostic reasoning
-4. Precautions for the most suspected disease
+                        1. Most suspected disease
+                        2. Other diseases with significant risk  
+                        3. Diagnostic reasoning
+                        4. Precautions for the most suspected disease
 
-Please structure your response as follows:
-**Most Suspected Disease:** [disease name]
-**Other Significant Risks:** [list of other diseases]
-**Diagnostic Reasoning:** [your reasoning chain]
-**Precautions:** [precautions for the most suspected disease]"""
+                        Please structure your response as follows:
+                        **Most Suspected Disease:** [disease name]
+                        **Other Significant Risks:** [list of other diseases]
+                        **Diagnostic Reasoning:** [your reasoning chain]
+                        **Precautions:** [precautions for the most suspected disease]"""
         
         prompt = f"<|im_start|>user\n{instruction}\n\nClinical Note:\n{clinical_note}<|im_end|>\n<|im_start|>assistant\n"
         
