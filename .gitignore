@@ -1,6 +1,11 @@
 temp/
 mimic-iv-ext-direct-1.0.0
+qwen1.5b-clinical-reasoning1
 qwen1.5b-clinical-reasoning
+qwen1.5b-symptoms-precautions
 qwen-clinical-merged-fp-16
 qwen-clinical-for-android-merged
 qwen-clinical-merged-fp16
+disease-symptom
+disease-symptom.zip
+
