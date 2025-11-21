@@ -351,12 +351,12 @@ def main():
     
     # Training arguments for phase 2 - EXTREME memory optimization
     training_args = TrainingArguments(
-        output_dir="./qwen1.5b-clinical-reasoning",
-        per_device_train_batch_size=1,  # Reduced from 2
-        per_device_eval_batch_size=1,   # Reduced from 2
-        gradient_accumulation_steps=8,  # Increased from 4
+        output_dir="./qwen1.5b-clinical-reasoning2.0",
+        per_device_train_batch_size=2,  # Reduced from 2
+        per_device_eval_batch_size=2,   # Reduced from 2
+        gradient_accumulation_steps=4,  # Increased from 4
         learning_rate=1e-5,
-        num_train_epochs=2,
+        num_train_epochs=3,
         logging_dir="./logs",
         logging_steps=5,
         eval_steps=50,
