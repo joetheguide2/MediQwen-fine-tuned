@@ -11,3 +11,5 @@ disease-symptom.zip
 env
 phase3_and_eval.py
 qwen1.5b-clinical-reasoning
+clinical_notes_dataset.csv
+disease_diagnosis.csv
