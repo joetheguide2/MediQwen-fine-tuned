@@ -1,5 +1,6 @@
 import json
 import os
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True,max_split_size_mb:512"
 import pandas as pd
 import torch
 from datasets import Dataset, DatasetDict
@@ -89,7 +90,7 @@ def load_model_with_frozen_adapters():
     print("Loading tokenizer from phase 1...")
     try:
         tokenizer = AutoTokenizer.from_pretrained(
-            "./qwen1.5b-symptoms-precautions",
+            "drive/MyDrive/qwen1.5b-symptoms-precautions",
             trust_remote_code=True,
             use_fast=True
         )
@@ -130,7 +131,7 @@ def load_model_with_frozen_adapters():
     try:
         model = PeftModel.from_pretrained(
             base_model,
-            "./qwen1.5b-symptoms-precautions/phase1_adapters",
+            "drive/MyDrive/qwen1.5b-symptoms-precautions/phase1_adapters",
             is_trainable=False
         )
         print("Successfully loaded phase 1 adapters")
@@ -300,14 +301,14 @@ def main():
     print("="*80)
     
     # Check if phase 1 adapters exist
-    if not os.path.exists("./qwen1.5b-symptoms-precautions/phase1_adapters"):
+    if not os.path.exists("drive/MyDrive/qwen1.5b-symptoms-precautions/phase1_adapters"):
         print("WARNING: Phase 1 adapters not found!")
         print("Knowledge-based components may be less accurate.")
         print("Continuing without phase 1 adapters...")
     
     # Load reasoning dataset
     print("\nLoading reasoning dataset...")
-    json_folder_path = "mimic-iv-ext-direct-1.0.0"
+    json_folder_path = "drive/MyDrive/Colab Notebooks/mimic-iv-ext-direct-1.0.0"
     df = load_direct_dataset(json_folder_path)
     
     if len(df) == 0:
@@ -353,14 +354,15 @@ def main():
     
     # Training arguments
     training_args = TrainingArguments(
-        output_dir="./qwen1.5b-clinical-reasoning-fixed",
-        per_device_train_batch_size=2,
-        per_device_eval_batch_size=2,
-        gradient_accumulation_steps=4,
+        output_dir="drive/MyDrive/qwen1.5b-clinical-reasoning-fixed",
+        per_device_train_batch_size=1,
+        per_device_eval_batch_size=1,
+        gradient_accumulation_steps=16,
         learning_rate=1e-5,
         num_train_epochs=3,
         logging_dir="./logs",
         logging_steps=5,
+        eval_accumulation_steps=4,
         eval_steps=50,
         save_steps=100,
         eval_strategy="steps",
@@ -405,9 +407,9 @@ def main():
         # Save final model
         print("\nSaving final model...")
         trainer.save_model()
-        tokenizer.save_pretrained("./qwen1.5b-clinical-reasoning-fixed")
+        tokenizer.save_pretrained("drive/MyDrive/qwen1.5b-clinical-reasoning-fixed")
         
-        model.save_pretrained("./qwen1.5b-clinical-reasoning-fixed/final_adapters")
+        model.save_pretrained("drive/MyDrive/qwen1.5b-clinical-reasoning-fixed/final_adapters")
         
         print(f"\n{'='*80}")
         print("TRAINING COMPLETED SUCCESSFULLY!")
